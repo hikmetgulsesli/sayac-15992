@@ -1,0 +1,224 @@
+# Sayac-15992 — Urun Gereksinimleri Dokumani (PRD)
+
+## 1. Genel Bakis
+
+Sayac-15992, kullanicilarin sayisal degerleri artirma, azaltma ve sifirlama islemlerini gerceklestirebilecekleri interaktif bir web sayaci uygulamasidir. Uygulama tarayicida localStorage ile veri kaliciligi saglar. Son 10 degisiklik timestamp ile gosterilir. Karanlik ve acik tema desteği mevcuttur. Turkce arayuz ile yerel kullanicilara dogal ve akici bir deneyim sunar.
+
+Hedef kitle: Gunluk kullanicilar, ogrenciler, isletme sahipleri (stok sayimi, ziyaretci sayaci, egzersiz takibi gibi basit ihtiyaclar icin).
+
+## 2. Hedefler
+
+- **Saya Artirma/Azaltma/Sifirlama**: Kullanici sayiyi kolayca artirabilir, azaltabilir ve sifirlayabilir.
+- **Degisiklik Gecmisi**: Son 10 degisiklik timestamp ile birlikte liste halinde gosterilir.
+- **Tema Degisimi**: Karanlik ve acik tema arasinda gecis yapilabilir, tercih localStorage'da saklanir.
+- **Veri Kaliciligi**: localStorage ile sayac degeri ve gecmis tarayicida saklanir, sayfa yenilense bile korunur.
+- **WCAG 2.1 AA Erisilebilirlik**: Klavye navigasyonu, ekran okuyucu destegi, yeterli kontrast orani.
+- **Mobil Uyumluluk**: 320px'ten 1920px'e kadar tum ekran boyutlarinda duzgun calisir.
+
+## 3. Tech Stack Detayi
+
+| Katman | Teknoloji |
+|--------|-----------|
+| Framework | React 18.3.1 |
+| Build Tool | Vite 5.x |
+| Language | TypeScript 5.x |
+| Styling | Tailwind CSS 3.x (custom theme) |
+| State Management | React useState + useReducer |
+| Storage | localStorage API |
+| Icons | Lucide React |
+| Fonts | Inter (body), Space Grotesk (headings) |
+
+## 4. Fonksiyonel Gereksinimler
+
+### 4.1 Sayac Degeri Kontrolu
+- **Artir butonu**: Mevcut degeri 1 artirir. Buton etiketi: "Arttir". Icon: Plus.
+- **Azalt butonu**: Mevcut degeri 1 azaltir. Negatif degerlere izin verilir. Buton etiketi: "Azalt". Icon: Minus.
+- **Sifirla butonu**: Sayac degerini 0'a getirir. Buton etiketi: "Sifirla". Icon: RotateCcw.
+- **Gosterim**: Sayac degeri buyuk font ile ekranda gosterilir. Format: tam sayi, negatif onunde eksi isareti. Arayuz: ortalanmis, buyuk, dikkat cekici.
+
+### 4.2 Degisiklik Gecmisi
+- Son 10 degisiklik listelenir (en yenisi ustte).
+- Her kayit su bilgileri icerir:
+  - Islem tipi: "Arttirildi (+N)", "Azaltildi (-N)", "Sifirlandi"
+  - Timestamp: GG.AA.YYYY SS:DD:SN formatinda
+  - Onceki deger -> Yeni deger
+- localStorage'da saklanir, sayfa yenilendiginde korunur.
+- Bos durumda: "Henuz islem yapilmadi" mesaji gosterilir.
+- Yeni kayit eklendiginde en eski kayit silinir (FIFO, max 10).
+
+### 4.3 Tema Degisimi
+- Toggle butonu sag ust kosede.
+- Icon: Sun (acik tema) / Moon (karanlik tema).
+- Tercih localStorage'da saklanir (key: sayac-15992-theme).
+- Baslangic: oncelikle localStorage'a bakilir, yoksa sistem tercihi (prefers-color-scheme).
+- Gecis animasyonlu (300ms fade).
+
+### 4.4 Veri Kaliciligi
+- Sayac degeri her degisiklikte localStorage'a kaydedilir.
+- Gecmis liste her degisiklikte guncellenir.
+- Sayfa yenilendiginde son degerler geri yuklenir.
+- Storage key'leri: sayac-15992-state, sayac-15992-theme
+
+### 4.5 Erisilebilirlik (WCAG 2.1 AA)
+- Tum butonlar klavye ile erisilebilir (Tab, Enter, Space).
+- ARIA etiketleri: aria-label ile buton aciklamalari.
+- Focus state: 2px solid primary renk outline, outline-offset: 2px.
+- Kontrast: Normal metin icin >= 4.5:1, buyuk metin icin >= 3:1.
+- Touch hedefleri: Minimum 44x44px.
+- aria-live="polite" ile sayac degeri degisikligi duyurulur.
+
+## 5. Veri Modeli
+
+### CounterState (localStorage key: sayac-15992-state)
+```typescript
+interface CounterState {
+  count: number;
+  history: HistoryEntry[];
+}
+
+interface HistoryEntry {
+  id: string;       // UUID
+  type: 'increment' | 'decrement' | 'reset';
+  previousValue: number;
+  newValue: number;
+  timestamp: string; // ISO 8601 formatinda
+}
+```
+
+### ThemeState (localStorage key: sayac-15992-theme)
+```typescript
+type Theme = 'light' | 'dark' | 'system';
+```
+
+## 6. UI/UX Gereksinimleri
+
+### Design System — Aesthetic: Playful
+
+**Renk Paleti (Acik Tema):**
+| Element | Hex |
+|---------|-----|
+| Background | #F0F4FF |
+| Surface | #FFFFFF |
+| Primary | #6366F1 |
+| Secondary | #8B5CF6 |
+| Text | #1E293B |
+| Text Muted | #64748B |
+| Border | #C7D2FE |
+| Success | #22C55E |
+| Error | #EF4444 |
+| Warning | #F59E0B |
+
+**Renk Paleti (Karanlik Tema):**
+| Element | Hex |
+|---------|-----|
+| Background | #0F172A |
+| Surface | #1E293B |
+| Primary | #818CF8 |
+| Secondary | #A78BFA |
+| Text | #F1F5F9 |
+| Text Muted | #94A3B8 |
+| Border | #334155 |
+| Success | #4ADE80 |
+| Error | #F87171 |
+| Warning | #FBBF24 |
+
+**Tipografi:**
+| Element | Font | Boyut | Agirlik |
+|---------|------|-------|---------|
+| Sayac Degeri | Space Grotesk | 96px | 700 |
+| Baslik | Space Grotesk | 24px | 600 |
+| Buton Metni | Inter | 16px | 500 |
+| Body | Inter | 14px | 400 |
+| Gecmis Tarih | Inter | 12px | 400 |
+
+**Icon Library:** Lucide React (Plus, Minus, RotateCcw, Sun, Moon)
+**Border Radius:** 8px (kucuk), 12px (orta), 16px (buyuk)
+
+### Bilesen Tanimlari
+
+**CounterDisplay:** 96px font, 700 agirlik, Space Grotesk. Animasyonlu sayi degisimi (scale + fade, 200ms). aria-live="polite". Sayac degeri degistiginde animasyon tetiklenir.
+
+**ActionButtons:** 3 buton yanyana (Azalt - Sifirla - Arttir). 48x48px minimum touch hedefi. Butonlar hover'da scale(1.05) gecer. Active'da scale(0.98). Primary buton (Arttir) solid fill, Sifirla outline style, Azalt secondary color.
+
+**HistoryList:** Scrollable liste, max-height: 200px. Her kayit sol tarafta islem iconu, ortada metin, sagda timestamp. En yenisi ustte. Bos durumda "Henuz islem yapilmadi" mesaji ortalanmis gosterilir.
+
+**ThemeToggle:** Icon button, 40x40px, sag ust kosede fixed. Acik tema: Sun icon, Karanlik tema: Moon icon. 300ms fade transition.
+
+## 7. Non-Functional Requirements
+
+### 7.1 Performans
+- Ilk yukleme: < 1.5 saniye (LCP)
+- Buton yaniti: < 50ms
+- Bundle boyutu: < 100KB (gzip)
+- TTI (Time to Interactive): < 2 saniye
+
+### 7.2 Erisilebilirlik (WCAG 2.1 AA)
+- Klavye navigasyonu tam destek (Tab, Enter, Space)
+- Screen reader uyumlu (ARIA labels, aria-live)
+- Kontrast orani >= 4.5:1 (metin), >= 3:1 (buyuk metin)
+- Focus state tum interactive elementlerde visible
+- Touch hedefleri >= 44x44px
+
+### 7.3 Tarayici Destegi
+- Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+- iOS Safari 14+, Android Chrome 90+
+- Responsive: mobile 320px+ → desktop 1920px+
+
+## 8. Proje Yapisi
+
+sayac-15992/
+├── src/
+│   ├── components/
+│   │   ├── CounterDisplay.tsx
+│   │   ├── ActionButtons.tsx
+│   │   ├── HistoryList.tsx
+│   │   ├── HistoryItem.tsx
+│   │   └── ThemeToggle.tsx
+│   ├── hooks/
+│   │   ├── useCounter.ts
+│   │   ├── useHistory.ts
+│   │   └── useTheme.ts
+│   ├── utils/
+│   │   └── time.ts
+│   ├── types/
+│   │   └── index.ts
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── index.css
+├── index.html
+├── package.json
+├── vite.config.ts
+├── tailwind.config.js
+├── tsconfig.json
+└── README.md
+
+## 9. Window State
+
+```typescript
+window.app = {
+  state: 'idle' | 'updating',
+  count: number,
+  historyLength: number,
+  theme: 'light' | 'dark' | 'system'
+}
+```
+
+## 10. Ekranlar
+
+| # | Ekran Adi | Tur | Aciklama |
+|---|-----------|-----|----------|
+| 1 | Ana Saya Ekrani | main | Sayac degeri, artir/azalt/sifirla butonlari, tema toggle |
+| 2 | Gecmis Liste Bos Durumu | empty-state | Henuz islem yapilmadiginda gosterilen mesaj |
+| 3 | Karanlik Tema Gorunumu | dark-theme | Karanlik tema aktifken uygulama gorunumu |
+| 4 | Mobil Duzen | responsive | 320px-480px mobil cihazlarda dikey yerlesim |
+
+Generate a SEPARATE screen design for EVERY page, view, modal, dialog, tab panel, and settings screen described in this PRD. Do NOT skip ANY screen — even if it seems minor.
+
+MANDATORY SCREENS:
+- If the PRD mentions "settings" or "ayarlar" → generate a Settings screen
+- If the PRD mentions tabs or bottom navigation → generate EACH tab view as a separate screen
+- If the PRD mentions modals (statistics, help, share, confirmation) → generate each as a separate screen
+- If the PRD mentions error states, empty states, loading states → generate those too
+- Generate at least as many screens as there are distinct views/pages/modals in the PRD
+
+All visible text must be in Turkish. Use a dark, modern theme.

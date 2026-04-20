@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html class="light" lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sayac-15992 - Geçmiş Liste</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#2a2f37",
+                        "surface-tint": "#4647d3",
+                        "surface-container-high": "#dce3f0",
+                        "outline": "#727780",
+                        "on-tertiary-fixed": "#3b002b",
+                        "on-primary-container": "#0a0081",
+                        "on-secondary-container": "#5517bf",
+                        "surface-dim": "#cdd5e4",
+                        "inverse-surface": "#090e16",
+                        "tertiary-container": "#ff8ed2",
+                        "on-secondary-fixed": "#40009b",
+                        "secondary": "#6a37d4",
+                        "tertiary-dim": "#882a69",
+                        "secondary-fixed": "#dac9ff",
+                        "primary-fixed-dim": "#8387ff",
+                        "surface-container-highest": "#d6ddec",
+                        "surface-container-low": "#ecf1fd",
+                        "outline-variant": "#a9adb7",
+                        "on-primary-fixed": "#000000",
+                        "on-error-container": "#510017",
+                        "primary-fixed": "#9396ff",
+                        "secondary-container": "#dac9ff",
+                        "error-dim": "#a70138",
+                        "error": "#b41340",
+                        "inverse-primary": "#8083ff",
+                        "primary": "#4647d3",
+                        "on-primary": "#f4f1ff",
+                        "surface-bright": "#f4f6ff",
+                        "background": "#f4f6ff",
+                        "on-surface-variant": "#575c65",
+                        "on-background": "#2a2f37",
+                        "tertiary-fixed-dim": "#ef81c4",
+                        "on-secondary": "#f8f0ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#63054a",
+                        "secondary-dim": "#5e26c7",
+                        "secondary-fixed-dim": "#ceb9ff",
+                        "primary-dim": "#3939c7",
+                        "surface": "#f4f6ff",
+                        "on-primary-fixed-variant": "#0e009d",
+                        "tertiary-fixed": "#ff8ed2",
+                        "primary-container": "#9396ff",
+                        "surface-variant": "#d6ddec",
+                        "tertiary": "#963776",
+                        "on-tertiary": "#ffeef4",
+                        "on-error": "#ffefef",
+                        "error-container": "#f74b6d",
+                        "on-tertiary-fixed-variant": "#6e1354",
+                        "on-secondary-fixed-variant": "#5f28c8",
+                        "inverse-on-surface": "#989da7",
+                        "surface-container": "#e3e8f5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-headline { font-family: 'Space Grotesk', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-24 font-body">
+<!-- TopAppBar -->
+<header class="bg-indigo-50/80 dark:bg-slate-950/80 backdrop-blur-xl font-['Space_Grotesk'] font-bold text-2xl uppercase tracking-tighter docked full-width top-0 sticky bg-gradient-to-b from-indigo-100/20 to-transparent dark:from-indigo-900/10 flat no shadows flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto z-40">
+<div class="text-2xl font-bold font-['Space_Grotesk'] text-indigo-700 dark:text-indigo-300 tracking-tight">Sayac-15992</div>
+<button class="text-indigo-600 dark:text-indigo-400 hover:scale-110 hover:text-indigo-500 transition-transform duration-300">
+<span class="material-symbols-outlined text-[28px]" data-icon="dark_mode">dark_mode</span>
+</button>
+</header>
+<main class="max-w-7xl mx-auto px-4 md:px-8 pt-8 pb-12 flex flex-col gap-12">
+<!-- Pulse Counter Area (Contextual Reference) -->
+<section class="flex flex-col items-center justify-center py-12 bg-surface-container-low rounded-[32px] mx-4 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-primary-container/20 to-transparent opacity-50 pointer-events-none"></div>
+<h2 class="font-headline text-surface-tint text-sm uppercase tracking-[0.2em] mb-4 font-bold relative z-10">Güncel Sayaç</h2>
+<div class="bg-surface-container-lowest rounded-[40px] px-16 py-12 flex items-center justify-center shadow-[0_20px_40px_rgba(70,71,211,0.08)] relative z-10 transition-transform duration-300 hover:scale-[1.02]">
+<span class="font-headline text-[5rem] leading-none text-primary font-bold tracking-tighter">0</span>
+</div>
+<div class="flex gap-4 mt-8 relative z-10">
+<button class="w-16 h-16 rounded-full bg-surface-container-lowest text-primary flex items-center justify-center shadow-[0_10px_20px_rgba(70,71,211,0.05)] hover:scale-110 hover:shadow-[0_15px_30px_rgba(70,71,211,0.1)] transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
+<span class="material-symbols-outlined text-3xl" data-icon="remove">remove</span>
+</button>
+<button class="w-20 h-20 rounded-full bg-gradient-to-tr from-primary to-primary-container text-on-primary flex items-center justify-center shadow-[0_15px_30px_rgba(70,71,211,0.2)] hover:scale-110 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
+<span class="material-symbols-outlined text-4xl" data-icon="add" data-weight="fill" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+</div>
+</section>
+<!-- Empty State History Section -->
+<section class="mx-4">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-headline text-3xl font-bold tracking-tight text-on-surface">İşlem Geçmişi</h3>
+</div>
+<!-- Empty State Container -->
+<div class="bg-surface-container-low rounded-[24px] p-12 flex flex-col items-center justify-center min-h-[300px] border border-outline-variant/15">
+<div class="w-24 h-24 rounded-full bg-surface-container-highest flex items-center justify-center mb-6 shadow-[0_10px_30px_rgba(70,71,211,0.05)]">
+<span class="material-symbols-outlined text-[48px] text-on-surface-variant/50" data-icon="history">history</span>
+</div>
+<p class="font-body text-lg text-on-surface-variant font-medium text-center max-w-sm">
+                    Henüz işlem yapılmadı. Hadi bir şeyler saymaya başla!
+                </p>
+<!-- Gentle Call to Action Hint -->
+<div class="mt-8 opacity-60">
+<span class="material-symbols-outlined text-3xl text-primary animate-bounce" data-icon="arrow_upward">arrow_upward</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl font-['Inter'] font-semibold text-[10px] tracking-wide fixed bottom-0 w-full rounded-t-[24px] border-none shadow-[0_-10px_40px_rgba(99,102,241,0.1)]">
+<!-- Sayaç (Inactive) -->
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-5 py-2 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-all rounded-2xl" href="#">
+<span class="material-symbols-outlined mb-1 text-[24px]" data-icon="counter_1">counter_1</span>
+<span>Sayaç</span>
+</a>
+<!-- Geçmiş (Active) -->
+<a class="flex flex-col items-center justify-center bg-indigo-100 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-200 rounded-2xl px-5 py-2 scale-105 transition-all hover:bg-indigo-50 dark:hover:bg-indigo-900/30 bounce-scale-110 duration-500 cubic-bezier(0.34,1.56,0.64,1)" href="#">
+<span class="material-symbols-outlined mb-1 text-[24px]" data-icon="history" data-weight="fill" style="font-variation-settings: 'FILL' 1;">history</span>
+<span>Geçmiş</span>
+</a>
+</nav>
+</body></html>
